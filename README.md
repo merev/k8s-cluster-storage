@@ -23,6 +23,8 @@ Furthermore, the following software is essential for the deployment process:
  - Vagrant 2.1+: https://developer.hashicorp.com/vagrant/downloads
 
 ## Cluster Details:
+The architecture of the cluster looks like:
+![general setup](cluster-architecture.png)
 
 Every node within the cluster is established using the same Vagrant box (*merev/k8s-node*). Comprehensive details regarding this box are available here: https://app.vagrantup.com/merev/boxes/k8s-node
 
