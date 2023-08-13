@@ -1,47 +1,68 @@
-# Kubernetes Cluster 
-This is an automated solution for K8S cluster + NFS Storage created through `kubeadm` and Vagrant. Follow the steps below:
- - clone the repository; 
- - open the directory in terminal;
- - execute the command `vagrant up`;
- - wait until the cluster is ready.
+# Kubernetes Cluster Deployment Guide
 
-You can install a different version of Kubernetes by changing the `box_version` settings in the Vagrantfile. The available box versions can be found here:
-https://app.vagrantup.com/merev/boxes/k8s-node
-#### Requirements:
+Welcome to the automated deployment solution for a Kubernetes (K8S) cluster with integrated NFS Storage. This solution employs `kubeadm` and Vagrant for cluster creation. To proceed, kindly follow these steps:
 
- - Regular computar (Laptop or PC) with RAM 8+ GB, Disk: 80+ GB, and CPU: Intel/AMD x64 with virtualization support;
- - VirtualBox 6.1+:  https://www.virtualbox.org/wiki/Downloads;
- - Vagrant 2.1+:  https://developer.hashicorp.com/vagrant/downloads;
+ - Clone the repository containing the necessary resources.
+ - Open the directory within your terminal application.
+ - Execute the command `vagrant up` to initiate the deployment process.
+ - Wait until the cluster initialization process is completed.
 
-## Cluster Details
-The architecture of the cluster looks like:
-![general setup](cluster-architecture.png)
+Should you desire to install a different Kubernetes version, you can achieve this by modifying the `box_version` settings within the Vagrantfile. Available box versions are accessible at: https://app.vagrantup.com/merev/boxes/k8s-node
 
-Every node in the cluster is based on the same Vagrant box (*merev/k8s-node*). You can find detailed information about the box here - https://app.vagrantup.com/merev/boxes/k8s-node.
-### Nodes Information
-The operating system installed on the nodes is Debian 11. Each node has 2 GB RAM, 2 CPUs, and 60 GB disk space. The hardware parameters can be adjusted before provisioning in the `config.vm.provider` block of the Vagrantfile. NFS-client is installed and a shared directory is mounted in the filesystem. The firewall is disabled. Every node has 2 network interfaces:
- - 1 NIC in NAT Mode - connected to the host machine;
- - 1 NIC in Bridge Mode - connected to the local network. (Cluster Network)
+#### System Requirements:
 
-The second NIC (Bridge mode) of the nodes has a static IP address that belongs to my local network. Don't forget to replace the IPs of these interfaces with the ones that belong to your network (in the initial configuration scripts and Vagrantfile).
+For a seamless experience, ensure your computing device (laptop or PC) meets the following specifications:
 
-#### Warning: Setting the networks in the above way brings various security vulnerabilities and is STRONGLY NON-RECOMMENDED for production environment! However, it can be used for testing and exercises at home as well as when working with just a regular laptop.
+ - RAM: 8 GB or more
+ - Disk Space: 80 GB or more
+ - CPU: Intel/AMD x64 with virtualization support
 
-Information about the installed software can be found in the box specification.
+Furthermore, the following software is essential for the deployment process:
 
-### Storage Information
+ - VirtualBox 6.1+: https://www.virtualbox.org/wiki/Downloads
+ - Vagrant 2.1+: https://developer.hashicorp.com/vagrant/downloads
 
-The NFS Server is part of the same network and has the same parameters as the other VMs. NFS-server is installed and there is a directory shared with the Cluster Network.
+## Cluster Details:
 
-### Initial Configuration
-The initial configuration of the cluster contains the following actions:
- - Control Plane Initialization;
- - Network Plugin Installation; 
- - Adding the Worker Nodes;
- - Storage Configuration.
+Every node within the cluster is established using the same Vagrant box (*merev/k8s-node*). Comprehensive details regarding this box are available here: https://app.vagrantup.com/merev/boxes/k8s-node
 
-The additional configuration contains (not applied by default):
- - Running the K8s Dashboard;
- - Deploying 2-coponents test application (consumer-producer app).
+### Node Information:
 
-You can have the additional configuration applied by uncommenting rows 54 and 55 in the Vagrantfile.
+All nodes operate on the Debian 11 operating system. Each node boasts the following specifications:
+
+ - 2 GB RAM
+ - 2 CPUs
+ - 60 GB disk space
+
+It is pertinent to note that these hardware parameters can be adjusted before provisioning by configuring the `config.vm.provider` section in the Vagrantfile. Each node has two network interfaces:
+
+ - 1 NIC in NAT Mode: Connected to the host machine
+ - 1 NIC in Bridge Mode: Connected to the local network (Cluster Network)
+
+The second NIC (Bridge mode) is assigned a static IP address within the local network. Please remember to replace the IPs with addresses pertinent to your network, both in the initial configuration scripts and the Vagrantfile.
+
+#### Security Note:
+
+The network configuration described above introduces security vulnerabilities and is strongly discouraged for production environments. However, it can be employed for testing, home-based exercises, or scenarios involving a standard laptop.
+
+For comprehensive software details, refer to the box specification.
+
+### Storage Information:
+
+The NFS Server, an integral part of the network, shares the same parameters as the other VMs. It's equipped with NFS-server functionality and includes a shared directory accessible via the Cluster Network.
+
+### Initial Configuration:
+
+The initial cluster configuration encompasses the following steps:
+
+ - Control Plane Initialization
+ - Network Plugin Installation
+ - Addition of Worker Nodes
+ - Storage Configuration
+
+Optional additional configuration steps include:
+
+ - Deploying the K8s Dashboard
+ - Setting up a 2-component test application (consumer-producer app)
+
+To enable the additional configuration, simply uncomment rows 54 and 55 within the Vagrantfile.
